@@ -19,7 +19,7 @@ export interface Lesson {
   scimlDescription: string;
 }
 
-const lessons: Lesson[] = [
+export const lessons: Lesson[] = [
   {
     slug: "area-of-a-square",
     title: "The Area of a Square",
