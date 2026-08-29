@@ -84,7 +84,7 @@ function CancerSim() {
     <Panel title="Flag a possible tumor">
       <p className="text-sm text-slate-400 mb-4">
         Matrix of cell measurements times a weight vector. Calculus turns the
-        score into a probability with a sigmoid: 1 / (1 + e^{-z}).
+        score into a probability with a sigmoid: 1 / (1 + exp(-z)).
       </p>
       <Slider label="Size (mm)" value={size} min={2} max={30} onChange={setSize} />
       <Slider label="Texture irregularity" value={texture} min={0} max={10} onChange={setTexture} />
