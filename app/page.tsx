@@ -12,7 +12,7 @@ export default function Home() {
         <div className="flex justify-center mb-6">
           <Image
             src="/logo.png"
-            alt="Gradient Grove logo"
+            alt="Hirpa SciML Academy logo"
             width={72}
             height={72}
             className="rounded-2xl"
@@ -122,7 +122,7 @@ export default function Home() {
       </section>
 
       <footer className="border-t border-grove-border py-8 text-center text-slate-500">
-        © 2026 Gradient Grove. Built with ❤️ for SciML education.
+        © 2026 Hirpa SciML Academy. Built with ❤️ for SciML education.
       </footer>
     </div>
   );

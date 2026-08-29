@@ -43,7 +43,7 @@ export default function LessonLayout({
             <div className="flex items-center gap-3">
               <Image
                 src="/logo.png"
-                alt="Gradient Grove logo"
+                alt="Hirpa SciML Academy logo"
                 width={36}
                 height={36}
                 className="rounded-lg shrink-0"

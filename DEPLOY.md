@@ -1,6 +1,6 @@
-# 🚀 Deployment Guide for Gradient Grove
+# Deployment Guide for Hirpa SciML Academy
 
-This guide will help you deploy Gradient Grove to Vercel and connect it to your subdomain `learn.hirpadata.com`.
+This guide will help you deploy Hirpa SciML Academy to Vercel and connect it to your subdomain `learn.hirpadata.com`.
 
 ## Prerequisites
 

@@ -20,7 +20,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Gradient Grove - SciML Learning Platform",
+  title: "Hirpa SciML Academy",
   description:
     "Rigor through intuition, not rigor through proof. Learn Scientific Machine Learning from the ground up.",
   icons: {

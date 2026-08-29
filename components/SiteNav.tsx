@@ -8,12 +8,12 @@ export default function SiteNav({ note }: { note?: string }) {
         <Link href="/" className="flex items-center gap-2">
           <Image
             src="/logo.png"
-            alt="Gradient Grove logo"
+            alt="Hirpa SciML Academy logo"
             width={32}
             height={32}
             className="rounded-lg"
           />
-          <span className="text-xl font-bold text-white">Gradient Grove</span>
+          <span className="text-xl font-bold text-white">Hirpa SciML Academy</span>
         </Link>
         <div className="flex items-center gap-5 text-sm text-slate-400">
           {note && <span className="hidden sm:inline text-slate-500">{note}</span>}

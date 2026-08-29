@@ -1,4 +1,4 @@
-# Gradient Grove
+# Hirpa SciML Academy
 
 > Rigor through intuition, not rigor through proof.
 
