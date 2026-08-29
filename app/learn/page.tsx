@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, BookOpen } from "lucide-react";
 import { getLessons } from "@/lib/lessons";
@@ -14,7 +15,14 @@ export default function LessonsPage() {
         >
           ← Back to home
         </Link>
-        <h1 className="text-4xl font-display font-bold text-white mb-4">
+        <h1 className="text-4xl font-display font-bold text-white mb-4 flex items-center gap-3">
+          <Image
+            src="/logo.png"
+            alt="Gradient Grove logo"
+            width={40}
+            height={40}
+            className="rounded-xl"
+          />
           Learning Paths
         </h1>
         <p className="text-slate-400 text-lg mb-12 max-w-2xl">

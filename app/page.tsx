@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { Sprout, BookOpen, Code, Sparkles } from "lucide-react";
+import { BookOpen, Code, Sparkles } from "lucide-react";
 
 export default function Home() {
   return (
@@ -8,7 +9,14 @@ export default function Home() {
       <div className="max-w-6xl mx-auto px-6 py-20">
         <section className="text-center mb-16">
           <h1 className="text-5xl font-bold text-white mb-4 flex items-center justify-center gap-3">
-            <Sprout className="text-sciml-green" size={48} />
+            <Image
+              src="/logo.png"
+              alt="Gradient Grove logo"
+              width={56}
+              height={56}
+              className="rounded-2xl"
+              priority
+            />
             Gradient Grove
           </h1>
           <p className="text-xl text-slate-300 italic mb-4">

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
@@ -46,9 +47,18 @@ export default function LessonLayout({
             Back to lessons
           </Link>
           <div className="flex flex-wrap items-end justify-between gap-3">
-            <div>
-              <h1 className="text-2xl font-display font-bold">{title}</h1>
-              <p className="text-slate-400 text-sm mt-1">{subtitle}</p>
+            <div className="flex items-center gap-3">
+              <Image
+                src="/logo.png"
+                alt="Gradient Grove logo"
+                width={36}
+                height={36}
+                className="rounded-lg shrink-0"
+              />
+              <div>
+                <h1 className="text-2xl font-display font-bold">{title}</h1>
+                <p className="text-slate-400 text-sm mt-1">{subtitle}</p>
+              </div>
             </div>
             <span className="text-xs uppercase tracking-wider text-slate-500">
               {track}

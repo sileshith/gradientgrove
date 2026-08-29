@@ -23,6 +23,10 @@ export const metadata: Metadata = {
   title: "Gradient Grove - SciML Learning Platform",
   description:
     "Rigor through intuition, not rigor through proof. Learn Scientific Machine Learning from the ground up.",
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({
