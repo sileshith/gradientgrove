@@ -25,7 +25,7 @@ export default function LessonsPage() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {lessons.map((lesson) => (
             <Link
-              son.slug}
+              key={lesson.slug}
               href={`/learn/${lesson.slug}`}
               className="bg-grove-panel rounded-xl p-6 hover:bg-grove-panel/80 transition-colors group"
             >
