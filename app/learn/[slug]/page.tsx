@@ -33,21 +33,18 @@ export default function LessonPage({ params }: { params: { slug: string } }) {
       title={lesson.title}
       subtitle={lesson.subtitle}
       track={lesson.track}
-    >
-      {{
-        scratchpad: <Scratchpad task={lesson.pencilTask} />,
-        blocks: <BlockBuilder blocks={lesson.blocks} onCodeChange={() => {}} />,
-        code: (
-          <CodeEditor
-            template={lesson.codeTemplate}
-            solution={lesson.codeSolution}
-            tests={lesson.codeTests}
-          />
-        ),
-        sciml: (
-          <SciMLApp slug={lesson.slug} description={lesson.scimlDescription} />
-        ),
-      }}
-    </LessonLayout>
+      scratchpad={<Scratchpad task={lesson.pencilTask} />}
+      blocks={<BlockBuilder blocks={lesson.blocks} />}
+      code={
+        <CodeEditor
+          template={lesson.codeTemplate}
+          solution={lesson.codeSolution}
+          tests={lesson.codeTests}
+        />
+      }
+      sciml={
+        <SciMLApp slug={lesson.slug} description={lesson.scimlDescription} />
+      }
+    />
   );
 }

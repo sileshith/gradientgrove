@@ -15,7 +15,7 @@ export default function BlockBuilder({
   onCodeChange,
 }: {
   blocks: Block[];
-  onCodeChange: (code: string) => void;
+  onCodeChange?: (code: string) => void;
 }) {
   const [stack, setStack] = useState<Block[]>([]);
   const [inputs, setInputs] = useState<Record<string, string>>({});
@@ -32,18 +32,18 @@ export default function BlockBuilder({
   function add(block: Block) {
     const next = [...stack, block];
     setStack(next);
-    onCodeChange(codeFrom(next, inputs));
+    onCodeChange?.(codeFrom(next, inputs));
   }
 
   function updateInput(id: string, value: string) {
     const nextInputs = { ...inputs, [id]: value };
     setInputs(nextInputs);
-    onCodeChange(codeFrom(stack, nextInputs));
+    onCodeChange?.(codeFrom(stack, nextInputs));
   }
 
   function clear() {
     setStack([]);
-    onCodeChange("");
+    onCodeChange?.("");
   }
 
   const generated = codeFrom(stack, inputs);
