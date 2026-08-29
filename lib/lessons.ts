@@ -1,208 +1,277 @@
-export interface Block {
-  id: string;
-  label: string;
-  type: "math" | "data" | "ml" | "control";
-  inputs?: string[];
-  pythonCode: string;
-}
-
 export interface Lesson {
   slug: string;
   title: string;
   subtitle: string;
   track: "Explorer" | "Builder" | "Researcher";
+  concept: string;
+  scimlApp: string;
   pencilTask: string;
-  blocks: Block[];
   codeTemplate: string;
   codeSolution: string;
-  codeTests: string[];
+  codeTests: string;
   scimlDescription: string;
 }
 
 export const lessons: Lesson[] = [
   {
-    slug: "area-of-a-square",
-    title: "The Area of a Square",
-    subtitle: "From hand-drawn math to predicting crop yield",
+    slug: "pixels-are-just-numbers",
+    title: "Lesson 1: Pixels Are Just Numbers",
+    subtitle: "How a computer sees an apple before it knows it is an apple",
     track: "Explorer",
-    pencilTask:
-      "Draw a square on the grid. Count the cells to find the area. What formula did you use?",
-    blocks: [
-      {
-        id: "set-side",
-        label: "Set side length to",
-        type: "math",
-        inputs: ["number"],
-        pythonCode: "side = {input}",
-      },
-      {
-        id: "calculate-area",
-        label: "Calculate area (side x side)",
-        type: "math",
-        pythonCode: "area = side * side",
-      },
-      {
-        id: "show-result",
-        label: "Show result",
-        type: "data",
-        pythonCode: "print(f'Area: {area} square units')",
-      },
-    ],
-    codeTemplate: `# Lesson: Area of a Square
-# Your scratchpad answer: _________
+    concept: "Images as matrices of RGB numbers",
+    scimlApp: "Pixel Painter",
+    pencilTask: `On the grid below, draw a simple apple using only 3 colors:
+RED = (255, 0, 0)    GREEN = (0, 255, 0)    YELLOW = (255, 255, 0)
 
-def square_area(side):
-    # TODO: Fill in the formula
-    pass
+Draw a 4x4 apple. Then write the 3 numbers for each colored cell.
+This is exactly how a computer stores a picture: as a grid of numbers.`,
+    codeTemplate: `import numpy as np
 
-# Test it
-print(f"Area of square with side 5: {square_area(5)}")
-print(f"Area of square with side 10: {square_area(10)}")
+# A computer sees an image as a grid of numbers.
+# This 4x4 image has 3 color channels: Red, Green, Blue
+# Each cell holds 3 numbers: [R, G, B]
+
+apple_image = np.array([
+    # Row 0: mostly green (leaf)
+    [[0, 255, 0], [255, 0, 0], [255, 0, 0], [0, 255, 0]],
+    # Row 1: red apple body
+    [[255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0]],
+    # Row 2: red apple body
+    [[255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0]],
+    # Row 3: yellow bottom
+    [[255, 255, 0], [255, 255, 0], [255, 255, 0], [255, 255, 0]],
+])
+
+print("Shape of image:", apple_image.shape)
+print("This means: 4 rows, 4 columns, 3 color channels")
+print()
+
+# TODO: Print the color of the pixel at row 1, column 1
+# Hint: apple_image[row, column]
+pixel = ???
+print("Pixel at [1,1]:", pixel)
+
+# TODO: What color is at row 0, column 0? Print it!
 `,
-    codeSolution: `def square_area(side):
-    return side * side
+    codeSolution: `import numpy as np
+
+apple_image = np.array([
+    [[0, 255, 0], [255, 0, 0], [255, 0, 0], [0, 255, 0]],
+    [[255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0]],
+    [[255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0]],
+    [[255, 255, 0], [255, 255, 0], [255, 255, 0], [255, 255, 0]],
+])
+
+print("Shape of image:", apple_image.shape)
+print("This means: 4 rows, 4 columns, 3 color channels")
+print()
+
+pixel = apple_image[1, 1]
+print("Pixel at [1,1]:", pixel)
+
+print("Pixel at [0,0]:", apple_image[0, 0])
 `,
-    codeTests: [
-      "assert square_area(5) == 25",
-      "assert square_area(10) == 100",
-      "assert square_area(0) == 0",
-    ],
+    codeTests: `assert apple_image.shape == (4, 4, 3)
+assert list(apple_image[1,1]) == [255, 0, 0]`,
     scimlDescription:
-      "Draw a field shape on the farm grid. The app will count pixels to calculate area and predict crop yield (10 crops per unit area). This is numerical integration!",
+      "Every photo on your phone is a giant grid of numbers. A 12-megapixel image is a matrix with 12 million RGB triples. Computers do not see colors. They read numbers. That is the first step of image recognition.",
   },
   {
-    slug: "slope-of-a-curve",
-    title: "The Slope of a Curve",
-    subtitle: "From drawing triangles to gradient descent",
-    track: "Builder",
-    pencilTask:
-      "Draw y = x². At x = 2, draw a tiny triangle with run = 0.1. Calculate the slope (rise/run). Try smaller runs to see what happens.",
-    blocks: [
-      {
-        id: "define-function",
-        label: "Define f(x) =",
-        type: "math",
-        inputs: ["number"],
-        pythonCode: "f = lambda x: {input}",
-      },
-      {
-        id: "pick-point",
-        label: "Pick x =",
-        type: "math",
-        inputs: ["number"],
-        pythonCode: "x = {input}",
-      },
-      {
-        id: "compute-derivative",
-        label: "Compute derivative (approximate)",
-        type: "ml",
-        pythonCode: "h = 0.001\nslope = (f(x + h) - f(x)) / h",
-      },
-      {
-        id: "show-slope",
-        label: "Show slope",
-        type: "data",
-        pythonCode: "print(f'Slope at x={x}: {slope}')",
-      },
-    ],
-    codeTemplate: `# Lesson: The Slope of a Curve
-# Your scratchpad answer: ________
+    slug: "fruit-edges",
+    title: "Lesson 2: Finding the Edge of a Fruit",
+    subtitle: "How computers find the outline of an apple using a tiny math window",
+    track: "Explorer",
+    concept: "Convolution: sliding a window to detect edges",
+    scimlApp: "Fruit Edge Detector",
+    pencilTask: `Look at a fruit picture. The EDGE is where red suddenly becomes green or yellow.
 
-def f(x):
-    # TODO: Your function here
-    pass
+Draw a 3x3 window around one edge pixel. Count how many inside pixels touch the center.
+Now count how many outside pixels touch the center.
 
-# Compute deriative numerically
-def derivative(func, x, h=0.001):
-    return (func(x + h) - func(x)) / h
+If inside = 5 and outside = 4, the center is probably an EDGE.
+Computers find edges the same way: they count neighbors in a tiny window.`,
+    codeTemplate: `import numpy as np
 
-# Test
-x = 2
-print(f"f({x}) = {f(x)}")
-print(f"Slope at x={x}: {derivative(f, x)}")
+# A simple fruit image: 1 = fruit, 0 = background
+fruit = np.array([
+    [0, 0, 1, 1, 0, 0],
+    [0, 1, 1, 1, 1, 0],
+    [0, 1, 1, 1, 1, 0],
+    [0, 1, 1, 1, 1, 0],
+    [0, 0, 1, 1, 0, 0],
+    [0, 0, 0, 0, 0, 0],
+])
+
+# This is an edge-detector kernel: a tiny math window
+kernel = np.array([
+    [-1, -1, -1],
+    [-1,  8, -1],
+    [-1, -1, -1],
+])
+
+# TODO: Fill in the edge detector function
+def find_edges(image, kernel):
+    rows, cols = image.shape
+    edges = np.zeros((rows, cols))
+
+    for r in range(1, rows - 1):
+        for c in range(1, cols - 1):
+            window = image[r-1:r+2, c-1:c+2]
+            # TODO: Multiply the window by the kernel, then sum
+            # Hint: np.sum(window * kernel)
+            score = ???
+            edges[r, c] = score
+
+    return edges
+
+result = find_edges(fruit, kernel)
+print("Original fruit:")
+print(fruit)
+print("\\nEdges found:")
+print(result)
 `,
-    codeSolution: `def f(x):
-    return x ** 2
+    codeSolution: `import numpy as np
 
-def derivative(func, x, h=0.001):
-    return (func(x + h) - func(x)) / h
+fruit = np.array([
+    [0, 0, 1, 1, 0, 0],
+    [0, 1, 1, 1, 1, 0],
+    [0, 1, 1, 1, 1, 0],
+    [0, 1, 1, 1, 1, 0],
+    [0, 0, 1, 1, 0, 0],
+    [0, 0, 0, 0, 0, 0],
+])
+
+kernel = np.array([
+    [-1, -1, -1],
+    [-1,  8, -1],
+    [-1, -1, -1],
+])
+
+def find_edges(image, kernel):
+    rows, cols = image.shape
+    edges = np.zeros((rows, cols))
+
+    for r in range(1, rows - 1):
+        for c in range(1, cols - 1):
+            window = image[r-1:r+2, c-1:c+2]
+            score = np.sum(window * kernel)
+            edges[r, c] = score
+
+    return edges
+
+result = find_edges(fruit, kernel)
+print("Original fruit:")
+print(fruit)
+print("\\nEdges found:")
+print(result)
 `,
-    codeTests: [
-      "assert abs(derivative(lambda x: x**2, 2) - 4) < 0.01",
-      "assert abs(derivative(lambda x: x**2, 3) - 6) < 0.01",
-    ],
+    codeTests: `assert find_edges(np.array([[0,0,0],[0,1,0],[0,0,0]]), kernel)[1,1] == 8`,
     scimlDescription:
-      "Watch the Gradient Descent Hiker! Start at any point on a 2D terrain. The hiker uses the slope (derivative) to walk downhill. Adjust learning rate to see if they converge or overshoot!",
+      "Your edge detector is a convolution. Face unlock on a phone runs a version of this math billions of times. Next you will use edges and other features to decide: apple or orange?",
   },
   {
-    slug: "patterns-in-grids",
-    title: "Patterns in Grids",
-    subtitle: "From counting neighbors to edge detection",
+    slug: "fruit-classifier",
+    title: "Lesson 3: Apple or Orange?",
+    subtitle: "Teaching a computer to classify fruit using simple math rules",
     track: "Explorer",
-    pencilTask:
-      "Draw a 5x5 grid. Shade some cells to make a pattern (like a letter 'L'). Count how many shaded neighbors each cell has. What pattern emerges?",
-    blocks: [
-      {
-        id: "load-grid",
-        label: "Load grid",
-        type: "data",
-        pythonCode:
-          "grid = [[0,1,0,0,0], [0,1,0,0,0], [0,1,1,1,0], [0,0,0,0,0], [0,0,0,0,0]]",
-      },
-      {
-        id: "count-neighbors",
-        label: "Count shaded neighbors",
-        type: "math",
-        pythonCode:
-          "neighbors = sum(grid[i-1][j-1:j+2] + grid[i][j-1:j+1] + grid[i+1][j-1:j+2])",
-      },
-      {
-        id: "highlight-pattern",
-        label: "Highlight pattern",
-        type: "ml",
-        pythonCode: "pattern = [count for count in neighbors if count > 3]",
-      },
-    ],
-    codeTemplate: `# Lesson: Patterns in Grids
-# Your scratchpad answer: _________
+    concept: "Linear classification: weighted scoring",
+    scimlApp: "Fruit Classifier",
+    pencilTask: `Play Fruit Detective with points.
 
-def count_neighbors(grid, i, j):
-    # TODO: Count shaded neighbors (up to 8 directions)
-    pass
+An APPLE is usually: Red (+10), Round (+5), Has a stem (+3)
+An ORANGE is usually: Orange (+10), Round (+7), Bumpy skin (+4)
+A BANANA is usually: Yellow (+10), Long (+8), Curved (+3)
 
-# Test it
-grid = [
-    [0, 1, 0],
-    [1, 1, 1],
-    [0, 1, 0]
-]
-for i in range(len(grid)):
-    for j in range(len(grid[0])):
-        neighbors = count_neighbors(grid, i, j)
-        print(f"Cell ({i},{j}): {grid[i][j]} has {neighbors} neighbors")
+Look at a mystery fruit. Give it points for each feature.
+Add up the score. Highest score wins.
+
+That is how the first image classifiers worked.`,
+    codeTemplate: `import numpy as np
+
+# Feature scores for each fruit
+# [Redness, Roundness, Stem, Orangeness, Bumpiness, Yellowness, Length]
+
+apple_scores =    [10,  5,  3,  0,  0,  0,  0]
+orange_scores =   [ 0,  7,  0, 10,  4,  0,  0]
+banana_scores =   [ 0,  0,  0,  0,  0, 10,  8]
+
+mystery_fruits = np.array([
+    # Fruit A: very red, round, has stem
+    [9, 5, 3, 1, 0, 0, 0],
+    # Fruit B: very orange, very round, bumpy
+    [0, 7, 0, 9, 4, 0, 0],
+    # Fruit C: very yellow, very long
+    [0, 0, 0, 0, 0, 9, 8],
+])
+
+def classify_fruit(fruit_features):
+    # TODO: Calculate the total score for each fruit type
+    # Hint: np.dot() multiplies two lists and adds them up
+
+    apple_total = np.dot(fruit_features, apple_scores)
+    orange_total = ???
+    banana_total = ???
+
+    print(f"  Apple score: {apple_total}")
+    print(f"  Orange score: {orange_total}")
+    print(f"  Banana score: {banana_total}")
+
+    scores = {"Apple": apple_total, "Orange": orange_total, "Banana": banana_total}
+    winner = max(scores, key=scores.get)
+    return winner
+
+for i, fruit in enumerate(mystery_fruits):
+    print(f"\\nMystery Fruit {chr(65+i)}:")
+    answer = classify_fruit(fruit)
+    print(f"  => It is an {answer}!")
 `,
-    codeSolution: `def count_neighbors(grid, i, j):
-    directions = [(-1,-1), (-1,0), (-1,1), (0,-1), (0,1), (1,-1), (1,0), (1,1)]
-    count = 0
-    for di, dj in directions:
-        ni, nj = i + di, j + dj
-        if 0 <= ni < len(grid) and 0 <= nj < len(grid[0]):
-            count += grid[ni][nj]
-    return count
+    codeSolution: `import numpy as np
+
+apple_scores =    [10,  5,  3,  0,  0,  0,  0]
+orange_scores =   [ 0,  7,  0, 10,  4,  0,  0]
+banana_scores =   [ 0,  0,  0,  0,  0, 10,  8]
+
+mystery_fruits = np.array([
+    [9, 5, 3, 1, 0, 0, 0],
+    [0, 7, 0, 9, 4, 0, 0],
+    [0, 0, 0, 0, 0, 9, 8],
+])
+
+def classify_fruit(fruit_features):
+    apple_total = np.dot(fruit_features, apple_scores)
+    orange_total = np.dot(fruit_features, orange_scores)
+    banana_total = np.dot(fruit_features, banana_scores)
+
+    print(f"  Apple score: {apple_total}")
+    print(f"  Orange score: {orange_total}")
+    print(f"  Banana score: {banana_total}")
+
+    scores = {"Apple": apple_total, "Orange": orange_total, "Banana": banana_total}
+    winner = max(scores, key=scores.get)
+    return winner
+
+for i, fruit in enumerate(mystery_fruits):
+    print(f"\\nMystery Fruit {chr(65+i)}:")
+    answer = classify_fruit(fruit)
+    print(f"  => It is an {answer}!")
 `,
-    codeTests: [
-      "assert count_neighbors([[0,1],[1,1]], 1, 1) == 2",
-      "assert count_neighbors([[1,0],[0,0]], 0, 0) == 0",
-    ],
+    codeTests: `assert classify_fruit(np.array([10,5,3,0,0,0,0])) == "Apple"`,
     scimlDescription:
-      "Edge Detection App! Draw a shape on a grid. The app applies a convolution kernel to detect edges. This is the foundation of computer vision and CNNs!",
+      "You built a classifier. It adds weighted feature scores: the same idea as a neural network, with simpler math. Later tracks learn how computers find the best weights with gradient descent.",
   },
 ];
+
+const aliases: Record<string, string> = {
+  "area-of-a-square": "pixels-are-just-numbers",
+  "slope-of-a-curve": "fruit-edges",
+  "patterns-in-grids": "fruit-classifier",
+};
 
 export function getLessons(): Lesson[] {
   return lessons;
 }
 
 export function getLesson(slug: string): Lesson | undefined {
-  return lessons.find((lesson) => lesson.slug === slug);
+  const resolved = aliases[slug] ?? slug;
+  return lessons.find((lesson) => lesson.slug === resolved);
 }

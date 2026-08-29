@@ -1,60 +1,52 @@
-import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, BookOpen } from "lucide-react";
+import { ArrowRight, Apple, BookOpen, Code2 } from "lucide-react";
 import { getLessons } from "@/lib/lessons";
+import SiteNav from "@/components/SiteNav";
 
-export default function LessonsPage() {
+const icons = [BookOpen, Code2, Apple];
+
+export default function LearnPage() {
   const lessons = getLessons();
 
   return (
     <div className="min-h-screen bg-grove-dark">
-      <div className="max-w-6xl mx-auto px-6 py-16">
-        <Link
-          href="/"
-          className="text-slate-400 hover:text-white text-sm mb-8 inline-block"
-        >
-          ← Back to home
-        </Link>
-        <h1 className="text-4xl font-display font-bold text-white mb-4 flex items-center gap-3">
-          <Image
-            src="/logo.png"
-            alt="Gradient Grove logo"
-            width={40}
-            height={40}
-            className="rounded-xl"
-          />
-          Learning Paths
+      <SiteNav note="Fruit Vision" />
+      <div className="max-w-3xl mx-auto px-6 py-12">
+        <h1 className="text-3xl font-bold text-white mb-2">
+          Fruit Vision Lessons
         </h1>
-        <p className="text-slate-400 text-lg mb-12 max-w-2xl">
-          Choose a lesson to start your journey into Scientific Machine Learning.
-          Each lesson follows our four-step pipeline: Pencil → Blocks → Code → SciML App.
+        <p className="text-slate-400 mb-8">
+          Learn how computers recognize fruit, from pixels to classification.
+          Start with Lesson 1.
         </p>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {lessons.map((lesson) => (
-            <Link
-              key={lesson.slug}
-              href={`/learn/${lesson.slug}`}
-              className="bg-grove-panel rounded-xl p-6 hover:bg-grove-panel/80 transition-colors group"
-            >
-              <div className="flex items-start justify-between mb-4">
-                <div className="p-3 bg-math-purple/20 rounded-lg">
-                  <BookOpen className="w-6 h-6 text-math-purple" />
+        <div className="space-y-4">
+          {lessons.map((lesson, i) => {
+            const Icon = icons[i] ?? BookOpen;
+            return (
+              <Link
+                key={lesson.slug}
+                href={`/learn/${lesson.slug}`}
+                className="block bg-grove-panel p-5 rounded-xl border border-grove-border hover:border-math-purple/50 group"
+              >
+                <div className="flex items-start justify-between">
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <Icon className="w-4 h-4 text-sciml-green" />
+                      <span className="text-xs uppercase tracking-wider text-slate-500">
+                        Lesson {i + 1}
+                      </span>
+                    </div>
+                    <h3 className="text-lg font-bold text-white group-hover:text-math-purple">
+                      {lesson.title}
+                    </h3>
+                    <p className="text-sm text-slate-400 mt-1">{lesson.subtitle}</p>
+                    <p className="text-xs text-slate-500 mt-3">{lesson.scimlApp}</p>
+                  </div>
+                  <ArrowRight className="w-5 h-5 text-slate-600 group-hover:text-math-purple mt-1" />
                 </div>
-                <span className="text-xs text-slate-500 uppercase tracking-wider">
-                  {lesson.track}
-                </span>
-              </div>
-              <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-math-purple transition-colors">
-                {lesson.title}
-              </h3>
-              <p className="text-slate-400 text-sm mb-4">{lesson.subtitle}</p>
-              <div className="flex items-center text-code-cyan font-medium text-sm">
-                Start Lesson
-                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-              </div>
-            </Link>
-          ))}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </div>

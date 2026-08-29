@@ -5,39 +5,32 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
-type Panels = {
-  scratchpad: ReactNode;
-  blocks: ReactNode;
-  code: ReactNode;
-  sciml: ReactNode;
-};
-
-const TABS = [
-  { id: "scratchpad", label: "Pencil" },
-  { id: "blocks", label: "Blocks" },
-  { id: "code", label: "Code" },
-  { id: "sciml", label: "SciML App" },
-] as const;
-
 export default function LessonLayout({
   title,
   subtitle,
   track,
   scratchpad,
-  blocks,
   code,
   sciml,
 }: {
   title: string;
   subtitle: string;
   track: string;
-} & Panels) {
-  const [tab, setTab] = useState<(typeof TABS)[number]["id"]>("scratchpad");
-  const panels: Panels = { scratchpad, blocks, code, sciml };
+  scratchpad: ReactNode;
+  code: ReactNode;
+  sciml: ReactNode;
+}) {
+  const [tab, setTab] = useState<"scratchpad" | "code" | "sciml">("scratchpad");
+  const tabs = [
+    { id: "scratchpad" as const, label: "Pencil", cls: "text-pink-400 bg-pink-400/10 border-pink-400/30" },
+    { id: "code" as const, label: "Code", cls: "text-sky-400 bg-sky-400/10 border-sky-400/30" },
+    { id: "sciml" as const, label: "SciML App", cls: "text-emerald-400 bg-emerald-400/10 border-emerald-400/30" },
+  ];
+  const panels = { scratchpad, code, sciml };
 
   return (
-    <div className="min-h-screen bg-grove-dark text-white">
-      <header className="border-b border-slate-800 px-6 py-4">
+    <div className="min-h-screen bg-grove-dark flex flex-col text-white">
+      <header className="border-b border-grove-border bg-grove-panel/80 px-6 py-4">
         <div className="max-w-7xl mx-auto">
           <Link
             href="/learn"
@@ -46,7 +39,7 @@ export default function LessonLayout({
             <ArrowLeft className="w-4 h-4" />
             Back to lessons
           </Link>
-          <div className="flex flex-wrap items-end justify-between gap-3">
+          <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <Image
                 src="/logo.png"
@@ -56,8 +49,8 @@ export default function LessonLayout({
                 className="rounded-lg shrink-0"
               />
               <div>
-                <h1 className="text-2xl font-display font-bold">{title}</h1>
-                <p className="text-slate-400 text-sm mt-1">{subtitle}</p>
+                <h1 className="text-xl font-bold">{title}</h1>
+                <p className="text-sm text-slate-400">{subtitle}</p>
               </div>
             </div>
             <span className="text-xs uppercase tracking-wider text-slate-500">
@@ -67,47 +60,35 @@ export default function LessonLayout({
         </div>
       </header>
 
-      <div className="lg:hidden border-b border-slate-800 px-4">
-        <div className="flex gap-1 overflow-x-auto py-2">
-          {TABS.map((item) => (
+      <div className="flex-1 flex flex-col max-w-7xl mx-auto w-full p-4 gap-4">
+        <div className="flex gap-2">
+          {tabs.map((item) => (
             <button
               key={item.id}
               type="button"
               onClick={() => setTab(item.id)}
-              className={`px-3 py-2 rounded-lg text-sm whitespace-nowrap ${
+              className={`px-4 py-2 rounded-lg text-sm font-medium border ${
                 tab === item.id
-                  ? "bg-math-purple text-white"
-                  : "text-slate-400 hover:text-white"
+                  ? item.cls
+                  : "bg-grove-panel text-slate-500 border-transparent"
               }`}
             >
               {item.label}
             </button>
           ))}
         </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto p-4 lg:p-6">
-        <div className="lg:hidden bg-grove-panel rounded-xl p-4 min-h-[70vh]">
-          {panels[tab]}
-        </div>
-        <div className="hidden lg:grid grid-cols-2 grid-rows-2 gap-4 min-h-[80vh]">
-          <Panel title="Pencil">{scratchpad}</Panel>
-          <Panel title="Blocks">{blocks}</Panel>
-          <Panel title="Code">{code}</Panel>
-          <Panel title="SciML App">{sciml}</Panel>
+        <div className="flex-1 bg-grove-panel rounded-xl border border-grove-border overflow-hidden min-h-[600px]">
+          <div className={`h-full ${tab === "scratchpad" ? "block" : "hidden"}`}>
+            {panels.scratchpad}
+          </div>
+          <div className={`h-full ${tab === "code" ? "block" : "hidden"}`}>
+            {panels.code}
+          </div>
+          <div className={`h-full ${tab === "sciml" ? "block" : "hidden"}`}>
+            {panels.sciml}
+          </div>
         </div>
       </div>
     </div>
-  );
-}
-
-function Panel({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <section className="bg-grove-panel rounded-xl p-4 flex flex-col min-h-[360px] overflow-hidden">
-      <h2 className="text-xs uppercase tracking-wider text-slate-500 mb-3">
-        {title}
-      </h2>
-      <div className="flex-1 min-h-0">{children}</div>
-    </section>
   );
 }

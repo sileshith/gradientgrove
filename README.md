@@ -24,22 +24,23 @@ Then open [http://localhost:3000](http://localhost:3000) in your browser.
 | Pyodide | Python in the browser via WebAssembly |
 | Lucide React | Icons |
 
-## The Four-Step Pipeline
+## The Three-Step Pipeline
 
 Every lesson follows this pedagogical flow:
 
-1. **Pencil** - Hand-written math on a grid canvas (think first)
-2. **Blocks** - Drag-and-drop logic that generates Python
-3. **Code** - Monaco editor plus Pyodide (real Python in the browser)
-4. **SciML App** - A scientific application (crop yield, gradient hiker, edge detection)
+1. **Pencil** - Draw and write first
+2. **Code** - Monaco editor plus Pyodide (Python and NumPy in the browser)
+3. **SciML App** - Pixel Painter, Fruit Edge Detector, or Fruit Classifier
 
 ## Available Lessons
 
-| Lesson | Slug | Track | Concept |
-| --- | --- | --- | --- |
-| Area of a Square | `area-of-a-square` | Explorer | Numerical integration, pixel counting |
-| Slope of a Curve | `slope-of-a-curve` | Builder | Derivatives, gradient descent |
-| Patterns in Grids | `patterns-in-grids` | Explorer | Convolution, edge detection |
+| Lesson | Slug | App |
+| --- | --- | --- |
+| Pixels Are Just Numbers | `pixels-are-just-numbers` | Pixel Painter |
+| Finding the Edge of a Fruit | `fruit-edges` | Fruit Edge Detector |
+| Apple or Orange? | `fruit-classifier` | Fruit Classifier |
+
+Also: [Math Lab](https://learn.hirpadata.com/lab) and [MedTech hiring map](https://learn.hirpadata.com/medtech).
 
 ## Adding a New Lesson
 

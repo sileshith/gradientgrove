@@ -16,6 +16,7 @@ module.exports = {
         "intuition-amber": "#f59e0b",
         "proof-slate": "#64748b",
         "grove-accent": "#8b5cf6",
+        "grove-border": "#334155",
       },
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],
